@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "erkr-semver-test"
-version = "0.0.1"
-description = ""
+version = "0.0.0"
+description = "This is the decription"
 authors = ["Eran Kricheli <eran.kricheli@frontegg.com>"]
 readme = "README.md"
 packages = [{include = "erkr_semver_test"}]
