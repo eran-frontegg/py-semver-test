@@ -1,0 +1,53 @@
+name: Pre Release
+
+on:
+  push:
+    branches: [ next ]
+
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  REPOSITORY_USERNAME: __token__
+  REPOSITORY_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.7
+
+      - name: Run Image
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: 1.2.2
+
+      - name: Configure poetry
+        shell: bash
+        run: python -m poetry config virtualenvs.in-project true
+
+      - name: View poetry version
+        run: poetry --version
+
+      - name: Install dependencies
+        run: |
+          python -m poetry install
+
+  publish_pre_release:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && !contains(github.event.head_commit.message, 'chore(release):')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.7
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Semantic Release
+        run: |
+          pip install python-semantic-release
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          semantic-release publish --verbosity=DEBUG
