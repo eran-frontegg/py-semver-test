@@ -18,9 +18,11 @@ version_variable = [
     "pyproject.toml:version"
 ]
 version_source="tag"
+tag_format="{version}"
 branch="main"
 upload_to_pypi = true
 upload_to_release = true
+prerelease_tag="alpha"
 build_command = "pip install poetry && poetry build"
 
 [build-system]
