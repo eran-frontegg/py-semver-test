@@ -4,6 +4,11 @@ on:
   push:
     branches: [ main ]
 
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  REPOSITORY_USERNAME: __token__
+  REPOSITORY_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+
 jobs:
   quality:
     name: Publish
