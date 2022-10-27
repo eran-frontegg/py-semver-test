@@ -35,7 +35,7 @@ jobs:
         run: |
           python -m poetry install
 
-  publish pre-release:
+  publish_pre_release:
     needs: build
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && !contains(github.event.head_commit.message, 'chore(release):')
     runs-on: ubuntu-latest
