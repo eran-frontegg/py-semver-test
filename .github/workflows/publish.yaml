@@ -1,12 +1,16 @@
-name: CI
+name: Publish
 
 on:
-  push:
-    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  REPOSITORY_USERNAME: __token__
+  REPOSITORY_PASSWORD: ${{ secrets.PYPI_TOKEN }}
 
 jobs:
-  quality:
-    name: Publish
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -30,19 +34,19 @@ jobs:
         run: |
           python -m poetry install
 
-  release:
-    needs: quality
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master' && !contains(github.event.head_commit.message, 'chore(release):')
+  publish:
+    needs: build
+    if: github.ref == 'refs/heads/main' && !contains(github.event.head_commit.message, 'chore(release):')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-python@v4
         with:
           python-version: 3.7
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Semantic Release
         run: |
           pip install python-semantic-release
           git config user.name github-actions
           git config user.email github-actions@github.com
-          semantic-release publish
+          semantic-release publish --verbosity=DEBUG

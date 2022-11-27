@@ -1,2 +1,2 @@
 def hello():
-    print('Message')
+    print('Message new another')

@@ -1,0 +1,31 @@
+name: Build & Test
+
+on:
+  pull_request:
+    branches: [ main, next ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.7
+
+      - name: Run Image
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: 1.2.2
+
+      - name: Configure poetry
+        shell: bash
+        run: python -m poetry config virtualenvs.in-project true
+
+      - name: View poetry version
+        run: poetry --version
+
+      - name: Install dependencies
+        run: |
+          python -m poetry install
