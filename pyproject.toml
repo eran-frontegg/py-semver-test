@@ -13,6 +13,7 @@ fastapi = "^0.85.1"
 
 
 [tool.semantic_release]
+version_source = "tag"
 version_variable = [
     "./erkr_semver_test3/__init__.py:__version__"
 ]
