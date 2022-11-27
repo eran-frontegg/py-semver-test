@@ -13,12 +13,7 @@ fastapi = "^0.85.1"
 
 
 [tool.semantic_release]
-version_variable = [
-    "erkr_semver_test/__init__.py:__version__"
-]
-version_toml = [
-    "pyproject.toml:tool.poetry.version"
-]
+version_source= "tag_only"
 branch="main"
 upload_to_pypi = true
 upload_to_release = true
