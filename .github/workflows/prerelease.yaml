@@ -36,7 +36,6 @@ jobs:
 
   publish_pre_release:
     needs: build
-    if: github.ref == 'refs/heads/main' && !contains(github.event.head_commit.message, 'chore(release):')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-python@v4

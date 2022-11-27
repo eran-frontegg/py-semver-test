@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "erkr-semver-test2"
-version = "2.1.0"
+name = "erkr-semver-test3"
+version = "0.0.0"
 description = "This is the decription"
 authors = ["Eran Kricheli <eran.kricheli@frontegg.com>"]
 readme = "README.md"
-packages = [{include = "erkr_semver_test2"}]
+packages = [{include = "erkr_semver_test3"}]
 
 [tool.poetry.dependencies]
 python = "^3.7"
@@ -13,11 +13,14 @@ fastapi = "^0.85.1"
 
 
 [tool.semantic_release]
-version_source= "tag_only"
-tag_format="{version}"
+version_variable = [
+    "./erkr_semver_test3/__init__.py:__version__"
+]
+version_toml = [
+    "pyproject.toml:tool.poetry.version"
+]
 branch="main"
 upload_to_pypi = true
-upload_to_release = true
 prerelease_tag="alpha"
 build_command = "pip install poetry && poetry build"
 
