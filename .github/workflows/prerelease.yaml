@@ -36,7 +36,7 @@ jobs:
 
   publish_pre_release:
     needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/next' && !contains(github.event.head_commit.message, 'chore(release):')
+    if: && github.ref == 'refs/heads/next' && !contains(github.event.head_commit.message, 'chore(release):')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-python@v4
